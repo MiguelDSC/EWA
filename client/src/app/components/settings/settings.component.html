@@ -1,0 +1,94 @@
+<div id='settings-container' class="container">
+  <div id='profilePicturePreview'>
+    <h3>Profile picture</h3>
+    <div class='inner'>
+      <input id='profilepicInput'
+             type='file'
+             accept='image/*'
+             multiple='false'
+             (change)='onImageUpload($event)' >
+      <img [src]='this.image'>
+    </div>
+    <button id='profilePicUploadButton'
+            class="btn"
+            [disabled]="!this.imageUploaded"
+            (click)='onConfirmImageUpload()'>Upload</button>
+  </div>
+  <form class="my-3" [formGroup]="unitSettings" (ngSubmit)="onSubmitUnitSettings()" id="unitSettingsForm">
+    <h3>Units</h3>
+    <h5>Temperature</h5>
+    <div class="d-block my-3">
+      <div class="custom-control custom-radio">
+        <input type="radio" value="{{tu.celcius}}" name="temperature" class="custom-control-input" formControlName="temperature">
+        <label class="custom-control-label ms-1">Celcius</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" value="{{tu.fahrenheit}}" name="temperature" class="custom-control-input" formControlName="temperature">
+        <label class="custom-control-label ms-1">Fahrenheit</label>
+      </div>
+      <h5>Measurement</h5>
+      <div class="d-block my-3">
+        <div class="custom-control custom-radio">
+          <input type="radio" value="{{du.meters}}" name="distance" class="custom-control-input" formControlName="distance">
+          <label class="custom-control-label ms-1">Metric</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" value="{{du.feet}}" name="distance" class="custom-control-input" formControlName="distance">
+          <label class="custom-control-label ms-1">Imperial</label>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-secondary">Update</button>
+    </div>
+  </form>
+  <form [formGroup]="personalSettings" (ngSubmit)="onSubmitPersonalSettings()" class="mb-3" id="personalSettingsForm">
+    <h3>Personal</h3>
+    <label for="displayName">Display name</label>
+    <div class="input-group">
+      <input type="text" id="displayName" placeholder="Display name" class="form-control" formControlName="displayName">
+    </div>
+    <label for="status">Status</label>
+    <div class="input-group">
+      <textarea id="status" class="form-control" placeholder="Status" formControlName="status"></textarea>
+    </div>
+    <div style='height: 1em'></div>
+    <h5>Graph visibility</h5>
+    <div id='enabledGraphsDashboard'>
+      <div class='option'
+           *ngFor='let option of this.personalSettings.value.graphPreferences.entries()'>
+        <input id='{{option[0]}}' type='checkbox' [checked]='option[1].value' (change)='updateCheckbox($event)'>
+        <label style='margin-left: 0.2em'>{{option[1].key}}</label>
+      </div>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-secondary"
+            [disabled]="!personalSettings.valid">Update</button>
+  </form>
+
+  <form [formGroup]="passwordSettings" (ngSubmit)="onSubmitPasswordSettings()" id='passwordSettingsForm' class="mb-3">
+    <h3>Password</h3>
+    <label for="oldPass">Old password</label>
+    <div class="input-group">
+      <input type="password" id="oldPass" class="form-control" formControlName="oldPass" placeholder="Old password">
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for="newPass1">New password</label>
+        <div class="col-md-6 mb-3 input-group">
+          <input type="password" id="newPass1" class="form-control" formControlName="newPass1" placeholder="New password">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="newPass2">Repeat password</label>
+        <div class="col-md-6 mb-3 input-group">
+          <input type="password" id="newPass2" class="form-control" formControlName="newPass2" placeholder="New password">
+        </div>
+      </div>
+    </div>
+    <div class="alert alert-warning"
+         *ngIf="passwordSettings.value.newPass1 && passwordSettings.controls.newPass2.errors">
+      Passwords don't match!
+    </div>
+    <button type="submit" class="btn btn-secondary"
+            [disabled]="!passwordSettings.valid">Change password</button>
+  </form>
+</div>

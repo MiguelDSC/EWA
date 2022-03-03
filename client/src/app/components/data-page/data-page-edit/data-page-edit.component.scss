@@ -1,0 +1,52 @@
+.small {
+    font-weight: 600 !important;
+}
+
+.btn.disabled {
+    cursor: not-allowed;
+}
+
+.button-bar {
+    margin: 18px 0 70px 0 !important;
+}
+
+.input-group-text {
+    background-color: #fff;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+::ng-deep .alert-box .alert {
+    margin-left: 4.5rem;
+    margin-top: 40px;
+}
+
+::ng-deep .form-error {
+    border-left: 6px solid #ff0000;
+    padding: 5px;
+    margin: 10px 0 -9px 0;
+    
+    div {
+        p {
+          margin: 1px 5px !important;
+          padding: 3px;  
+        }
+    }
+}
+
+.ng-invalid {
+    border-color: #ff0000 !important;
+}
+
+button:disabled {
+    cursor: not-allowed;
+}

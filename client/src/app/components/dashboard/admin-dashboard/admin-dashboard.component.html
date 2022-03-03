@@ -1,0 +1,55 @@
+<div class="container-fluid overflow-hidden my-2">
+    <div class="row gy-2 gx-3">
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xxl-6 text-center">
+            <div class="content bg-white p-3">
+                <p class="small m-0 fw-bold">Total amount of changes to the greenhouse made today</p>
+                <h1 class="text-primary m-0">{{todayApiCall}}</h1>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xxl-6 text-center">
+            <div class="content bg-white p-3">
+                <p class="small m-0 fw-bold">Total amount of logins today</p>
+                <h1 class="text-primary m-0">{{todayLoginAmount}}</h1>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-6">
+            <div class="chart-container bg-white p-3">
+                <p class="small m-0 fw-bold">Changes made to the greenhouse per day</p>
+                <div class="apicall"></div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-6">
+            <div class="chart-container bg-white p-3 overflow-hidden">
+                <p class="small m-0 fw-bold">Logins  per day</p>
+                <div class="logins"></div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-6">
+            <div class="chart-container bg-white p-3">
+                <p class="small m-0 fw-bold">Changes made to the greenhouse per team today</p>
+                <div class="apiteam"></div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-6">
+            <div class="bg-white p-3 h-100">
+                <p class="small m-0 fw-bold">Teamleaders</p>
+                <div class="overflow-auto" style="max-height: 200px;">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr *ngFor="let i of members" routerLink="{{'/team/' + i.id}}"
+                                class="content col mt-3 bg-muted" border="2">
+                                <td>{{i.firstname}} {{i.surname}} - {{i.role}}</td>
+                                <td> <b>Last Login</b> {{i.last_login}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-12">
+            <div class="bg-white p-3">
+                <p class="small m-0 fw-bold">Invite new members</p>
+                userwindow
+            </div>
+        </div>
+    </div>

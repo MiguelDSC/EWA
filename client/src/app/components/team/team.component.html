@@ -1,0 +1,166 @@
+<div class="container mt-5">
+  <div class="row mb-2">
+    <h2>Team overview</h2>
+  </div>
+<!--  Admin side of team members -->
+  <div *ngIf="level < 2">
+    <div class="row mt-5">
+      <div class="col-md-6 col-sm-12">
+        <h3>Add user</h3>
+        <div>
+          <form [formGroup]="inviteForm" (ngSubmit)="onInviteSubmit()">
+            <div class="form-group d-flex">
+              <div class="w-25 d-flex align-self-center">
+                <label for="first_name--team_form">First name</label>
+              </div>
+              <div class="w-75">
+                <span class="text-danger" id="first_name--error"></span>
+                <input type="text" class="form-control" formControlName="first_name"
+                       id="first_name--team_form" placeholder="First name">
+              </div>
+            </div>
+            <div class="form-group d-flex my-3">
+              <div class="w-25 d-flex align-self-center">
+                <label for="last_name--team_form">Last name</label>
+              </div>
+              <div class="w-75">
+                <span class="text-danger" id="last_name--error"></span>
+                <input type="text" class="form-control" formControlName="last_name"
+                       id="last_name--team_form" placeholder="Last name">
+              </div>
+            </div>
+            <div class="form-group d-flex">
+              <div class="w-25 d-flex align-self-center">
+                <label for="email--team_form">Email</label>
+              </div>
+              <div class="w-75">
+                <span class="text-danger" id="email--error"></span>
+                <input type="email" class="form-control"  formControlName="email"
+                       id="email--team_form" aria-describedby="emailHelp" placeholder="Email">
+              </div>
+            </div>
+
+            <div class="form-group d-flex mt-3">
+              <div class="w-25 d-flex align-self-center">
+                <label for="role--team_form">Role</label>
+              </div>
+              <div class="w-75">
+                <span class="text-danger" id="role--error"></span>
+                <select name="role--select" id="role--team_form" class="form-select" formControlName="role">
+                  <option value="" disabled>Open the menu</option>
+                  <option *ngFor="let role of roles" [ngValue]="role">{{role}}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group d-flex mt-3">
+              <div class="w-25 d-flex align-self-center">
+                <label for="level--team_form">Level</label>
+              </div>
+              <div class="w-75">
+                <span class="text-danger" id="level--error"></span>
+                <select name="level--select" id="level--team_form" class="form-select" formControlName="level">
+                  <option value="" disabled>Open the menu</option>
+                  <option *ngFor="let level of this.levels | keyvalue" [ngValue]="level.key" value="{{level.key}}">{{level.value}}</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <span class="text-success" id="succes-message--form"></span>
+              <span class="text-danger" id="danger-message--form"></span>
+            </div>
+            <div class="d-flex justify-content-around mt-3">
+              <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                      data-bs-target="#inviteModal">Invite</button>
+            </div>
+
+            <!--    Invite modal      -->
+            <div class="modal fade" id="inviteModal" tabindex="-1"
+                 aria-labelledby="inviteModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="inviteModalLabel">Invite user</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure you want to invite this user?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" id="modal-invite__submit-button"
+                            data-bs-dismiss="modal">Invite user!</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <app-invited-users></app-invited-users>
+      </div>
+      </div>
+    </div>
+
+<!-- Current users -->
+  <div class="row my-2">
+    <h3 class="text-center mb-3">Current users</h3>
+    <div class="d-flex col-md-4 col-sm-12 justify-content-center mb-2" *ngFor="let user of this.userService.users">
+      <div>
+        <div class="d-flex justify-content-center align-items-center">
+          <img src="{{defineImagePath(user)}}" alt="" class="img-fluid rounded-circle profile-picture--team_member"
+               id="profile-picture-{{user.id}}">
+        </div>
+        <h3 class="text-center mt-2">{{user.firstname}} {{user.surname}}</h3>
+        <h4 class="text-center">{{user.role_name}}</h4>
+        <p class="text-center">{{user.email}}</p>
+        <div class="d-flex ms-auto align-items-center justify-content-center" *ngIf="this.level < 2">
+          <button class="btn btn-primary btn-success"
+                  (click)="this.changeSelectedIdAndModal(user.id)" id="open-edit_modal--button">Edit</button>
+          <button id="editButtonTeamAdmin" class="visually-hidden" data-bs-toggle="modal" data-bs-target="#editModal">MAMA MIA</button>
+          <!--              <i class="bi bi-x-circle-fill cross-icon__team" (click)="this.deleteById(member.id)"></i>-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- edit modal -->
+  <div class="modal fade" *ngIf="userService.selectedUser != null" id="editModal" tabindex="-1"
+       aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Edit user</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <div class="d-flex my-2 flex-column">
+                <div>
+                  {{userService.selectedUser.firstname}}'s is role right now is {{userService.selectedUser.role_name}}
+                </div>
+                <div>
+                  <form [formGroup]="editForm" (ngSubmit)="onEditSubmit(userService.selectedUserId)">
+                    <select name="role--select" id="role--edit_form" class="form-select mt-2" formControlName="role">
+                      <option *ngFor="let role of this.roles" [attr.value]="role"
+                              [attr.selected]="userService.selectedUser.role_name === role ? true : null">{{role}}</option>
+                    </select>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                              (click)="deleteUserFromTeam()">Delete user</button>
+                      <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Update user</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

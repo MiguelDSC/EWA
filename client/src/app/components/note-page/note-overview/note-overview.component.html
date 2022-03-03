@@ -1,0 +1,301 @@
+<div class="container">
+  <div class="container-main">
+    <div class="container alert-box fixed-top"></div>
+    <div class="input-group rounded">
+      <!-- searchbar -->
+      <form [formGroup]="searchBar">
+        <input
+          type="search"
+          class="form-control rounded"
+          placeholder="Search"
+          id="searchInput"
+          aria-label="Search"
+          aria-describedby="search-addon"
+          formControlName="searchTerm"
+          [(ngModel)]="searchTerm" />
+      </form>
+      <span class="input-group-text border-0" id="search-addon">
+        <i class="bi bi-search"></i>
+      </span>
+    </div>
+    <div class="big-container">
+      <div class="small-container">
+        <div class="left-part">
+          <!-- filters -->
+          <h1>Notes</h1>
+          <button
+            type="button"
+            (click)="noteService.toggleFilter('team-notes')"
+            [class.active-filter]="
+              noteService.activeFilter.indexOf('team-notes') > -1
+            "
+            class="btn btn-filter text-white">
+            Team Notes
+          </button>
+          <button
+            type="button"
+            (click)="noteService.toggleFilter('agronomy')"
+            [class.active-filter]="
+              noteService.activeFilter.indexOf('agronomy') > -1
+            "
+            class="btn btn-filter text-white">
+            Agronomy
+          </button>
+          <button
+            type="button"
+            (click)="noteService.toggleFilter('botany')"
+            [class.active-filter]="
+              noteService.activeFilter.indexOf('botany') > -1
+            "
+            class="btn btn-filter text-white">
+            Botany
+          </button>
+          <button
+            type="button"
+            (click)="noteService.toggleFilter('hydrology')"
+            [class.active-filter]="
+              noteService.activeFilter.indexOf('hydrology') > -1
+            "
+            class="btn btn-filter text-white">
+            Hydrology
+          </button>
+          <button
+            type="button"
+            (click)="noteService.toggleFilter('geology')"
+            [class.active-filter]="
+              noteService.activeFilter.indexOf('geology') > -1
+            "
+            class="btn btn-filter text-white">
+            Geology
+          </button>
+          <button
+            type="button"
+            (click)="noteService.toggleFilter('climate-science')"
+            [class.active-filter]="
+              noteService.activeFilter.indexOf('climate-science') > -1
+            "
+            class="btn btn-filter text-white">
+            Climate Science
+          </button>
+        </div>
+
+        <div class="left-part note-list">
+          <!-- notes list -->
+          <ul class="list-group">
+            <li
+              class="list-group-item"
+              *ngFor="let note of noteService.notes | noteFilter: searchTerm"
+              (click)="onClickNote(note)"
+              [class.active]="note.id === selectedNote?.id">
+              <span
+                >{{ note.title }}
+                <span class="badge bg-secondary">{{
+                  note.noteCategory
+                }}</span></span
+              >
+              <span *ngIf="note.updatedDate == null">
+                Created on: {{ formatDate(note.createdDate) }}</span
+              >
+              <span *ngIf="note.updatedDate != null">
+                Last edited: {{ formatDate(note.updatedDate) }}</span
+              >
+            </li>
+            <span *ngIf="noteService.notes.length === 0">No notes found</span>
+          </ul>
+        </div>
+      </div>
+
+      <div class="small-container right-part">
+        <!-- child component -->
+        <app-note-detail></app-note-detail>
+      </div>
+    </div>
+
+    <!-- Modal create note button -->
+    <button
+      *ngIf="this.noteService.userTeam?.level != 3"
+      class="bi bi-plus-square-fill btn-note"
+      data-bs-toggle="modal"
+      data-bs-target="#createNoteModal"
+      id="create-new-note-btn"
+      (click)="isModalEdit = false"></button>
+
+    <!-- Modal edit note button -->
+    <button
+      *ngIf="
+        selectedNote != null &&
+        this.selectedNote.createdBy.team.id ==
+          this.noteService.userTeam.team.id &&
+        this.noteService.userTeam.level != 3
+      "
+      class="bi bi-pencil-square btn-note"
+      data-bs-toggle="modal"
+      data-bs-target="#createNoteModal"
+      (click)="isModalEdit = true"
+      (click)="updateForm()"></button>
+
+    <!-- Modal delete note button -->
+    <button
+      *ngIf="
+        selectedNote != null &&
+        this.selectedNote.createdBy.team.id ==
+          this.noteService.userTeam.team.id &&
+        this.noteService.userTeam.level != 3
+      "
+      class="bi bi-trash-fill btn-note"
+      data-bs-toggle="modal"
+      data-bs-target="#deleteNoteModal"></button>
+
+    <!-- Modal new Note -->
+    <div
+      class="modal fade"
+      id="createNoteModal"
+      tabindex="-1"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <form [formGroup]="newNoteForm" (ngSubmit)="onSubmit()">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" *ngIf="isModalEdit">Edit Note</h5>
+              <h5 class="modal-title" *ngIf="!isModalEdit">Create New Note</h5>
+              <button
+                id="closeNewNoteModal"
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="col-form-label">Note Title:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="noteTitle"
+                  [ngClass]="{
+                    'is-invalid':
+                      submitted && newNoteForm.controls.noteTitle.errors
+                  }" />
+                <div
+                  *ngIf="submitted && newNoteForm.controls.noteTitle.errors"
+                  class="invalid-feedback">
+                  <div *ngIf="newNoteForm.controls.noteTitle.errors.required">
+                    Note Title is required
+                  </div>
+                  <div *ngIf="newNoteForm.controls.noteTitle.errors.maxlength">
+                    Note Title must not exceed 40 characters
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="col-form-label">Note Content:</label>
+                <textarea
+                  class="form-control"
+                  formControlName="noteContent"
+                  [ngClass]="{
+                    'is-invalid':
+                      submitted && newNoteForm.controls.noteContent.errors
+                  }"></textarea>
+                <div
+                  *ngIf="submitted && newNoteForm.controls.noteContent.errors"
+                  class="invalid-feedback">
+                  <div *ngIf="newNoteForm.controls.noteContent.errors.required">
+                    Note content is required
+                  </div>
+                  <div
+                    *ngIf="newNoteForm.controls.noteContent.errors.maxlength">
+                    Note content must not exceed 1200 characters, current
+                    length: {{ newNoteForm.controls.noteContent.value.length }}
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="col-form-label"
+                  >Share note with other teams:</label
+                >
+              </div>
+              <div class="mb-3">
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    name="shared"
+                    type="checkbox"
+                    formControlName="shared" />
+                  <label class="form-check-label">Yes</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-dismiss="modal"
+                (click)="(onReset)">
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                class="btn btn-primary"
+                *ngIf="!isModalEdit"
+                (click)="(onReset)">
+                Create Note
+              </button>
+              <button type="submit" class="btn btn-primary" *ngIf="isModalEdit">
+                Save Note
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- delete modal -->
+    <div
+      class="modal fade noselect"
+      id="deleteNoteModal"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-hidden="true"
+      *ngIf="selectedNote != null">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="staticBackdropLabel">
+              <button
+                id="closeDeleteModal"
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
+              <i class="bi bi-exclamation-triangle"></i> Deleting Note
+            </h5>
+          </div>
+          <div class="modal-body">
+            <p>
+              This action <b>cannot be undone</b>! Are you sure you want to
+              delete {{ selectedNote.title }} ?
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              (click)="closeModal('closeDeleteModal')"
+              class="btn text-danger fw-bold">
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="btn btn-cc"
+              id="noteModal"
+              (click)="deleteNote(selectedNote.id)">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

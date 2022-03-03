@@ -1,0 +1,33 @@
+<div class="container">
+    <p class="my-3 h5">
+        <a routerLink="/" class="text-decoration-none text-black"><i class="bi bi-arrow-left"></i> Back to dashboard</a>
+    </p>
+    <p id="info">Greenhouse settings</p>
+    <app-data-page-edit></app-data-page-edit>
+    <hr class="w-100">
+    <p id="info">Greenhouse measurements</p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Timestamp</th>
+                <th scope="col">CO2</th>
+                <th scope="col">Air temperature</th>
+                <th scope="col">Soil temperature</th>
+                <th scope="col">Water pH</th>
+                <th scope="col">Air humidity</th>
+                <th scope="col">Soil humidity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of data">
+                <th>{{ arrToTime(item.apiTime) }}</th>
+                <td>{{ item.co2Level }}</td>
+                <td>{{ item.airTemperature }}</td>
+                <td>{{ item.soilTemperature }}</td>
+                <th>{{ item.waterPH }}</th>
+                <td>{{ item.airHumidity }}</td>
+                <td>{{ item.soilHumidity }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

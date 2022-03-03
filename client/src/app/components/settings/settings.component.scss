@@ -1,0 +1,63 @@
+
+#settings-container {
+  background-color: whitesmoke;
+  padding: 0 2em;
+  margin-top: 1em;
+  padding-top: 1.8em;
+  padding-bottom: 1em;
+  border-radius: 8px 8px 8px 8px;
+
+  //Optional
+  box-shadow: 10px 8px #DFDFDF;
+
+  input[type="text"], input[type="password"], textarea {
+    background-color: #ebebeb;
+  }
+  input::placeholder {
+    color: #5e6366;
+  }
+}
+
+#profilePicturePreview {
+  padding-top: 4em;
+  padding-right: 5em;
+  float: right;
+  //background: green;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .inner {
+    $background-color: #D3D3D3;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 12em;
+    height: 12em;
+    outline: 2px solid $background-color;
+    outline-offset: -1px;
+    background-color: $background-color;
+    margin-bottom: 0.5em;
+
+    img {
+      max-width: 100%;
+      transition: transform 150ms;
+    }
+
+    input {
+      width: 12em;
+      height: 12em;
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 9999;
+    }
+  }
+  .inner:hover img {
+    transform: scale(1.05);
+  }
+
+  #profilePicUploadButton {
+    font-size: 13px;
+  }
+
+}

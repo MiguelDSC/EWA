@@ -1,0 +1,7 @@
+[
+  {"id": 1, "role": "hydrologist", "first_name": "Ken", "last_name": "Thompson", "email": "ken@bell-labs.com", "image_path": "/assets/img/member/avatar.png"},
+  {"id": 2, "role": "hydrologist", "first_name": "Alan", "last_name": "Turing", "email": "a.turing@bletchley-park.co.uk", "image_path": "/assets/img/member/avatar.png"},
+  {"id": 3, "role": "botanist", "first_name": "James", "last_name": "Gosling", "email": "j.gosling@aws.com", "image_path": "/assets/img/member/avatar.png"},
+  {"id": 4, "role": "climate scientist", "first_name": "Grace", "last_name": "Hopper", "email": "grace.hopper@navy.mil", "image_path": "/assets/img/member/avatar.png"},
+  {"id": 5, "role": "geologist", "first_name": "Edsger", "last_name": "Dijkstra", "email": "edsger.dijkstra@cwi.nl", "image_path": "/assets/img/member/avatar.png"}
+]

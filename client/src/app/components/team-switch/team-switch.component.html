@@ -1,0 +1,14 @@
+<div class="focus-box w-100">
+    <img class="mx-auto d-block" src="/assets/img/cc_logo.png" alt="Climate Cleanup logo" srcset="">
+    <form class="border rounded px-5 py-5 bg-white">
+        <h1 class="h3 fw-normal">Select a team</h1>
+        <p class="small">You are a member of the follwing teams.</p>
+        <div class="row">
+            <div class="col-sm-12 mt-2 p-3" *ngFor="let item of teamList" (click)="selectTeam(item.teamId)">
+                <p class="fw-bold">{{ item.teamName }}</p>
+                <p>{{ item.roleName }}</p>
+                <i class="bi bi-chevron-right float-end"></i>
+            </div>
+        </div>
+    </form>
+</div>

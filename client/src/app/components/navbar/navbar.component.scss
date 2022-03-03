@@ -1,0 +1,40 @@
+$width: 4.5rem;
+$icon-width: 2.3rem;
+
+nav {
+    height: 100vh;
+    width: $width;
+    position: fixed;
+    z-index: 0;
+    top: 0;
+    left: 0;
+}
+
+.nav-brand {
+    width: ($width - 0.1);
+}
+
+.nav-link {
+    color: #fff;
+    font-size: $icon-width;
+}
+
+.nav-link:hover {
+    color: #d4c9c9;
+}
+
+.nav.fixed-bottom {
+    max-width: $width !important;
+}
+
+.profile-img {
+    width: 44px;
+    margin: 15px 13px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.sign-out:hover {
+    color: #fff !important;
+    background-color: #dc3545;
+}

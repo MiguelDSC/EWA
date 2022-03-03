@@ -1,0 +1,16 @@
+<div class="container">
+<!-- show if selected note is selected -->
+  <div class="centered" *ngIf="selectedNote != null">
+    <h1>{{ selectedNote?.title }}</h1>
+
+    <p>
+      {{ selectedNote?.content }}
+    </p>
+    <span>
+      Creator:
+      {{selectedNote.createdBy?.user.firstname}}
+      {{selectedNote.createdBy?.user.surname}}
+    </span>
+
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<nav class="bg-primary">
+    <a routerLink="/">
+        <img class="nav-brand" src="/assets/img/cc_logo.png" alt="" srcset="">
+    </a>
+    <ul class="nav flex-column mt-3">
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/team"><i class="bi bi-people-fill"></i></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/note-page"><i class="bi bi-stickies-fill"></i></a>
+        </li>
+    </ul>
+    <ul class="nav fixed-bottom">
+        <li class="nav-item">
+            <div class="btn-group dropend">
+<!--              TODO component html requests dont get intercepted-->
+                <img class="profile-img" data-bs-toggle="dropdown" aria-expanded="false" [src]='this.image' alt="profile picture">
+                <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
+                    <li class="m-1">
+                        <a class="dropdown-item" routerLink="/settings"><i class="bi bi-gear-fill"></i> Settings</a>
+                    </li>
+                    <li class="m-1">
+                        <a class="dropdown-item" routerLink="/team-selection"><i class="bi bi-people-fill"></i> Switch teams</a>
+                    </li>
+                    <li class="m-1">
+                        <a class="dropdown-item text-danger m-0 sign-out" routerLink="/logout"><i class="bi bi-box-arrow-right"></i> Sign out</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</nav>

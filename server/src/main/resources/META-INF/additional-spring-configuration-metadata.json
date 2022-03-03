@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "fe.address",
+      "type": "java.lang.String",
+      "description": "Address of the front-end app."
+    }
+  ]
+}

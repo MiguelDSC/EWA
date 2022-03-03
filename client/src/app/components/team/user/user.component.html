@@ -1,0 +1,16 @@
+<div class="row" *ngIf="selectedUser != undefined">
+  <div class="col-12">
+    <h3 class="text-center">{{selectedUser.firstname}} {{selectedUser.surname}}</h3>
+    <p class="text-center">{{selectedUser.email}}</p>
+    <div class="d-flex justify-content-center align-items-center">
+      <img src="{{selectedUser.imagePath}}" alt="" class="img-fluid rounded-circle profile--image profile-picture--member">
+    </div>
+    <div class="text-center">
+      <h3>Email: {{selectedUser.email}}</h3>
+      <h4>Role: {{selectedUser.role}}</h4>
+
+    </div>
+
+  </div>
+</div>
+

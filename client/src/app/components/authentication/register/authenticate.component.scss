@@ -1,0 +1,41 @@
+::ng-deep html, ::ng-deep body {
+  height: 100%;
+}
+
+::ng-deep body.login-body {
+  margin-left: -4.5rem;
+  background-color: var(--primary);
+}
+
+.signin-box {
+  max-width: 500px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+}
+
+.signin-box img {
+  width: 100px;
+}
+
+.alert-box{
+  margin-top: 10px;
+}
+
+.btn-signin {
+  background-color: var(--primary);
+  color: #fff;
+}
+@media only screen and (max-width: 600px) {
+  .reset {
+    display: block;
+    text-decoration: none;
+    float: none;
+    margin: 20px 0 0 0;
+  }
+}
+

@@ -1,0 +1,22 @@
+// Container of members
+$main-color: #4CA46A;
+
+.member--background {
+  background-color: $main-color;
+  color: white;
+  cursor: pointer;
+  border: 1px solid black;
+}
+
+.profile-picture--team_member {
+  max-width: 300px;
+  height: 150px;
+  background-color: white;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.cross-icon__team {
+  cursor: pointer;
+  font-size: 2rem;
+}

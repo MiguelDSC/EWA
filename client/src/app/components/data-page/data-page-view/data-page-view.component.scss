@@ -1,0 +1,29 @@
+::ng-deep .noUi-connect {
+    background: var(--primary);
+}
+
+::ng-deep .noUi-target {
+    height: .8rem !important;
+}
+
+::ng-deep .noUi-handle {
+    height: 20px !important;
+    width: 20px !important;
+    border-radius: 50% !important;
+    margin-top: 1px;
+    cursor: pointer;
+}
+
+button.nav-link {
+    color: #000;
+}
+
+button.nav-link.active {
+    font-weight: bold;
+    border: none;
+    border-bottom: solid 4px var(--primary);
+}
+
+#slider, .chart-info {
+    margin: 12px 28px 5px 24px;
+}
